@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Layer — Wedding Film Structure</title>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  :root {
+    --bg: #f3f1ea;
+    --paper: #fbfaf6;
+    --paper-2: #f7f5ef;
+    --line: #dedbd1;
+    --line-strong: #c8c4b8;
+    --text: #20231f;
+    --muted: #7c8178;
+    --green: #526858;
+    --green-soft: #dfe7df;
+    --warm: #e9dfcf;
+    --shadow: 0 12px 35px rgba(34, 39, 31, 0.07);
+  }
+
+  body {
+    margin: 0;
+    background:
+      linear-gradient(rgba(255,255,255,.2), rgba(255,255,255,.2)),
+      var(--bg);
+    color: var(--text);
+    font-family:
+      Inter, Pretendard, -apple-system, BlinkMacSystemFont,
+      "Segoe UI", sans-serif;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  .app {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 250px minmax(520px, 1fr) 360px;
+  }
+
+  /* LEFT */
+
+  .left-panel {
+    padding: 28px 20px;
+    border-right: 1px solid var(--line);
+    background: rgba(250,248,241,.76);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .brand {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 27px;
+    margin-bottom: 4px;
+  }
+
+  .brand-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 38px;
+  }
+
+  .section-title {
+    font-size: 11px;
+    letter-spacing: .12em;
+    color: var(--muted);
+    margin: 27px 0 10px;
+    text-transform: uppercase;
+  }
+
+  .input-basic,
+  textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--line-strong);
+    background: transparent;
+    outline: none;
+    padding: 9px 2px;
+    color: var(--text);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 70px;
+    line-height: 1.6;
+  }
+
+  .chip-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .chip {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    padding: 7px 10px;
+    border-radius: 99px;
+    font-size: 12px;
+    color: #64685f;
+  }
+
+  .chip.active {
+    background: var(--green);
+    color: white;
+    border-color: var(--green);
+  }
+
+  .global-action {
+    margin-top: 30px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .secondary-btn {
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    padding: 10px;
+    border-radius: 8px;
+    color: var(--text);
+  }
+
+  /* CENTER */
+
+  .workspace {
+    padding: 42px 48px 100px;
+    max-width: 1100px;
+    width: 100%;
+    margin: auto;
+  }
+
+  .top-note {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 45px;
+  }
+
+  .top-note h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-size: clamp(31px, 4vw, 52px);
+    line-height: 1.08;
+    margin: 0 0 13px;
+  }
+
+  .top-note p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 620px;
+  }
+
+  .status {
+    white-space: nowrap;
+    font-size: 12px;
+    color: var(--green);
+    background: var(--green-soft);
+    border-radius: 30px;
+    padding: 8px 12px;
+  }
+
+  .film-overview {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 15px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 38px;
+  }
+
+  .overview-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .overview-head h2 {
+    font-size: 17px;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .mini {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .overview-grid {
+    margin-top: 22px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .overview-cell label {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+
+  .overview-cell input,
+  .overview-cell select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    padding: 8px 0;
+    outline: none;
+  }
+
+  .timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 15px;
+  }
+
+  .timeline-header h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 27px;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .add-btn {
+    border: none;
+    background: var(--green);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+  }
+
+  .timeline {
+    position: relative;
+  }
+
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 25px;
+    top: 17px;
+    bottom: 22px;
+    width: 1px;
+    background: var(--line-strong);
+  }
+
+  .scene {
+    position: relative;
+    display: grid;
+    grid-template-columns: 51px 1fr;
+    margin-bottom: 13px;
+  }
+
+  .scene-number {
+    width: 28px;
+    height: 28px;
+    margin-top: 18px;
+    margin-left: 11px;
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: Georgia, serif;
+    font-size: 12px;
+    z-index: 2;
+  }
+
+  .scene-card {
+    background: rgba(251,250,246,.82);
+    border: 1px solid var(--line);
+    padding: 18px 18px 16px;
+    border-radius: 12px;
+    transition: .18s ease;
+  }
+
+  .scene-card:hover {
+    border-color: #aaa99f;
+    transform: translateY(-1px);
+  }
+
+  .scene-card.selected {
+    background: #fff;
+    border-color: var(--green);
+    box-shadow: 0 12px 30px rgba(70,90,75,.09);
+  }
+
+  .scene-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .scene-name {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .scene-duration {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .scene-description {
+    margin-top: 8px;
+    color: #71766e;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .scene-meta {
+    margin-top: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .meta {
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    color: #71766e;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 10px;
+  }
+
+  .scene-controls {
+    margin-top: 15px;
+    display: flex;
+    gap: 6px;
+  }
+
+  .small-btn {
+    border: 1px solid var(--line);
+    background: transparent;
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* RIGHT */
+
+  .right-panel {
+    border-left: 1px solid var(--line);
+    background: rgba(251,250,246,.85);
+    padding: 28px 24px 50px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+  }
+
+  .inspector-empty {
+    color: var(--muted);
+    padding-top: 80px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .inspector h3 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0 0 7px;
+  }
+
+  .inspector-sub {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 28px;
+  }
+
+  .field {
+    margin-bottom: 22px;
+  }
+
+  .field label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: .05em;
+    color: var(--muted);
+    margin-bottom: 7px;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--line-strong);
+    background: transparent;
+    outline: none;
+    padding: 9px 2px;
+  }
+
+  .field textarea {
+    min-height: 80px;
+  }
+
+  .asset-box {
+    border: 1px dashed #bbb9ae;
+    border-radius: 10px;
+    padding: 15px;
+    background: rgba(255,255,255,.4);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .asset-row {
+    display: flex;
+    gap: 7px;
+    margin-top: 9px;
+  }
+
+  .asset-row input {
+    flex: 1;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 8px;
+    outline: none;
+  }
+
+  .asset-row button {
+    border: none;
+    background: var(--green);
+    color: white;
+    padding: 0 10px;
+    border-radius: 6px;
+  }
+
+  .asset-list {
+    margin-top: 12px;
+  }
+
+  .asset-item {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .asset-remove {
+    border: none;
+    background: none;
+    color: #9a837a;
+  }
+
+  .danger {
+    color: #875e55;
+    border-color: #d8c1bb;
+  }
+
+  .footer-submit {
+    margin-top: 34px;
+    border-top: 1px solid var(--line);
+    padding-top: 23px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    border: none;
+    border-radius: 9px;
+    background: #252c27;
+    color: white;
+    padding: 13px;
+  }
+
+  @media (max-width: 1100px) {
+    .app {
+      grid-template-columns: 210px 1fr;
+    }
+
+    .right-panel {
+      position: fixed;
+      right: 0;
+      width: min(390px, 90vw);
+      transform: translateX(100%);
+      transition: .2s;
+      box-shadow: -10px 0 30px rgba(0,0,0,.08);
+      z-index: 20;
+    }
+
+    .right-panel.open {
+      transform: translateX(0);
+    }
+
+    .workspace {
+      padding: 35px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .app {
+      display: block;
+    }
+
+    .left-panel {
+      position: static;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .workspace {
+      padding: 28px 17px 80px;
+    }
+
+    .overview-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- LEFT : 전체 방향 -->
+
+  <aside class="left-panel">
+
+    <div class="brand">Layer</div>
+    <div class="brand-sub">Wedding film architecture</div>
+
+    <div class="section-title">이 영상이 남겨야 하는 것</div>
+
+    <textarea
+      id="filmIntent"
+      placeholder="예: 결혼식 기록보다, 우리가 어떻게 여기까지 왔는지가 남았으면 좋겠어요."
+    ></textarea>
+
+    <div class="section-title">느낌</div>
+
+    <div class="chip-wrap" id="moodChips">
+      <button class="chip">따뜻한</button>
+      <button class="chip">잔잔한</button>
+      <button class="chip">영화 같은</button>
+      <button class="chip">유쾌한</button>
+      <button class="chip">다큐멘터리</button>
+      <button class="chip">빈티지</button>
+      <button class="chip">빠른 호흡</button>
+      <button class="chip">자연스러운</button>
+    </div>
+
+    <div class="section-title">남기고 싶은 중심</div>
+
+    <div class="chip-wrap" id="focusChips">
+      <button class="chip">두 사람</button>
+      <button class="chip">가족</button>
+      <button class="chip">친구</button>
+      <button class="chip">결혼식 공간</button>
+      <button class="chip">준비 과정</button>
+      <button class="chip">대화</button>
+      <button class="chip">표정</button>
+      <button class="chip">시간의 흐름</button>
+    </div>
+
+    <div class="global-action">
+      <button class="secondary-btn" onclick="saveProject()">
+        구조 저장
+      </button>
+
+      <button class="secondary-btn" onclick="exportProject()">
+        JSON 내보내기
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- CENTER -->
+
+  <main class="workspace">
+
+    <div class="top-note">
+
+      <div>
+        <h1>
+          우리 영상은<br>
+          어떤 흐름으로 남을까.
+        </h1>
+
+        <p>
+          장면을 하나씩 놓아보세요.
+          완성된 영상의 형태를 정확히 알 필요는 없습니다.
+          기억, 사람, 장면과 감정의 순서를 먼저 만들어두면
+          편집자가 그 구조 위에서 영상을 만들 수 있습니다.
+        </p>
+      </div>
+
+      <div class="status" id="saveStatus">
+        저장되지 않음
+      </div>
+
+    </div>
+
+
+    <!-- OVERVIEW -->
+
+    <section class="film-overview">
+
+      <div class="overview-head">
+        <h2>영상 전체 구조</h2>
+        <span class="mini" id="sceneCount">0 scenes</span>
+      </div>
+
+      <div class="overview-grid">
+
+        <div class="overview-cell">
+          <label>영상 이름</label>
+          <input
+            id="projectTitle"
+            placeholder="우리의 7년"
+          />
+        </div>
+
+        <div class="overview-cell">
+          <label>예상 길이</label>
+
+          <select id="filmLength">
+            <option>3–5분</option>
+            <option>5–8분</option>
+            <option>8–12분</option>
+            <option>12–20분</option>
+            <option>길이 미정</option>
+          </select>
+        </div>
+
+        <div class="overview-cell">
+          <label>영상 형식</label>
+
+          <select id="filmType">
+            <option>스토리형</option>
+            <option>하이라이트형</option>
+            <option>다큐멘터리형</option>
+            <option>뮤직비디오형</option>
+            <option>혼합형</option>
+          </select>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TIMELINE -->
+
+    <div class="timeline-header">
+      <div>
+        <div class="mini">STORY FLOW</div>
+        <h2>영상의 흐름</h2>
+      </div>
+
+      <button class="add-btn" onclick="addScene()">
+        + 장면 추가
+      </button>
+    </div>
+
+    <div class="timeline" id="timeline"></div>
+
+  </main>
+
+
+  <!-- RIGHT DETAIL -->
+
+  <aside class="right-panel" id="rightPanel">
+
+    <div class="inspector-empty" id="emptyInspector">
+      장면을 선택하면<br>
+      이곳에서 그 장면의 구조를 설계할 수 있습니다.
+    </div>
+
+    <div class="inspector" id="inspector" style="display:none;">
+
+      <h3 id="inspectorTitle">장면</h3>
+      <div class="inspector-sub">
+        장면 하나를 하나의 편집 단위로 생각해보세요.
+      </div>
+
+      <div class="field">
+        <label>장면 이름</label>
+        <input id="editName" />
+      </div>
+
+      <div class="field">
+        <label>이 장면에서 일어나는 것</label>
+        <textarea id="editDescription"></textarea>
+      </div>
+
+      <div class="field">
+        <label>이 장면이 전달해야 하는 감정</label>
+        <input
+          id="editEmotion"
+          placeholder="예: 설렘 → 약간의 그리움"
+        />
+      </div>
+
+      <div class="field">
+        <label>편집 리듬</label>
+
+        <select id="editRhythm">
+          <option>천천히</option>
+          <option>보통</option>
+          <option>빠르게</option>
+          <option>점점 빨라짐</option>
+          <option>점점 느려짐</option>
+          <option>편집자 판단</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>예상 길이</label>
+        <input
+          id="editDuration"
+          placeholder="예: 25초"
+        />
+      </div>
+
+      <div class="field">
+
+        <label>사용할 자료</label>
+
+        <div class="asset-box">
+
+          사진, 영상, 카톡 캡처, 음성,
+          편지, 장소, 인터뷰 등 무엇이든
+          이 장면의 재료로 연결할 수 있습니다.
+
+          <div class="asset-row">
+            <input
+              id="assetInput"
+              placeholder="예: 대학 첫 데이트 사진"
+            />
+            <button onclick="addAsset()">+</button>
+          </div>
+
+          <div class="asset-list" id="assetList"></div>
+
+        </div>
+
+      </div>
+
+      <div class="field">
+        <label>편집자에게 전달할 메모</label>
+
+        <textarea
+          id="editNote"
+          placeholder="예: 너무 감동적으로 만들기보다 당시의 어색함도 남겨주세요."
+        ></textarea>
+
+      </div>
+
+      <button
+        class="secondary-btn danger"
+        style="width:100%;"
+        onclick="deleteCurrentScene()"
+      >
+        이 장면 삭제
+      </button>
+
+      <div class="footer-submit">
+        <button class="submit-btn" onclick="saveProject()">
+          현재 구조 저장
+        </button>
+      </div>
+
+    </div>
+
+  </aside>
+
+</div>
+
+
+<script>
+
+let scenes = [
+  {
+    id: crypto.randomUUID(),
+    name: "처음",
+    description: "우리가 만나기 전과 처음 서로를 알게 된 시점.",
+    emotion: "조용한 시작",
+    rhythm: "천천히",
+    duration: "20초",
+    assets: [
+      "학창 시절 사진",
+      "처음 연락했던 메시지"
+    ],
+    note: ""
+  },
+
+  {
+    id: crypto.randomUUID(),
+    name: "우리의 시간",
+    description: "데이트, 여행, 일상 속에 쌓여간 시간.",
+    emotion: "편안함과 즐거움",
+    rhythm: "보통",
+    duration: "40초",
+    assets: [
+      "여행 영상",
+      "일상 사진"
+    ],
+    note: ""
+  },
+
+  {
+    id: crypto.randomUUID(),
+    name: "결혼을 준비하면서",
+    description: "프로포즈 이후 결혼을 준비하게 된 과정.",
+    emotion: "기대와 설렘",
+    rhythm: "점점 빨라짐",
+    duration: "35초",
+    assets: [
+      "프로포즈 영상",
+      "반지 사진",
+      "웨딩 준비 사진"
+    ],
+    note: ""
+  },
+
+  {
+    id: crypto.randomUUID(),
+    name: "오늘",
+    description: "결혼식 당일, 사람들과 우리가 같은 장소에 모이는 순간.",
+    emotion: "벅참",
+    rhythm: "편집자 판단",
+    duration: "1분",
+    assets: [
+      "본식 촬영",
+      "가족",
+      "친구"
+    ],
+    note: ""
+  }
+];
+
+let selectedSceneId = null;
+
+
+/* ------------------------------------
+   RENDER
+------------------------------------ */
+
+function renderTimeline() {
+
+  const timeline = document.getElementById("timeline");
+  timeline.innerHTML = "";
+
+  scenes.forEach((scene, index) => {
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "scene";
+
+    wrapper.innerHTML = `
+      <div class="scene-number">${index + 1}</div>
+
+      <div
+        class="scene-card ${
+          selectedSceneId === scene.id
+            ? "selected"
+            : ""
+        }"
+        onclick="selectScene('${scene.id}')"
+      >
+
+        <div class="scene-top">
+
+          <div class="scene-name">
+            ${escapeHTML(scene.name || "이름 없는 장면")}
+          </div>
+
+          <div class="scene-duration">
+            ${escapeHTML(scene.duration || "")}
+          </div>
+
+        </div>
+
+        <div class="scene-description">
+          ${escapeHTML(
+            scene.description ||
+            "아직 장면 설명이 없습니다."
+          )}
+        </div>
+
+        <div class="scene-meta">
+
+          ${
+            scene.emotion
+            ? `<span class="meta">${escapeHTML(scene.emotion)}</span>`
+            : ""
+          }
+
+          ${
+            scene.rhythm
+            ? `<span class="meta">${escapeHTML(scene.rhythm)}</span>`
+            : ""
+          }
+
+          ${
+            scene.assets.length
+            ? `<span class="meta">자료 ${scene.assets.length}</span>`
+            : ""
+          }
+
+        </div>
+
+        <div class="scene-controls">
+
+          <button
+            class="small-btn"
+            onclick="event.stopPropagation(); moveScene('${scene.id}', -1)"
+          >
+            ↑
+          </button>
+
+          <button
+            class="small-btn"
+            onclick="event.stopPropagation(); moveScene('${scene.id}', 1)"
+          >
+            ↓
+          </button>
+
+          <button
+            class="small-btn"
+            onclick="event.stopPropagation(); duplicateScene('${scene.id}')"
+          >
+            복제
+          </button>
+
+        </div>
+
+      </div>
+    `;
+
+    timeline.appendChild(wrapper);
+  });
+
+  document.getElementById("sceneCount").textContent =
+    scenes.length + " scenes";
+}
+
+
+/* ------------------------------------
+   SELECT
+------------------------------------ */
+
+function selectScene(id) {
+
+  selectedSceneId = id;
+
+  const scene =
+    scenes.find(scene => scene.id === id);
+
+  if (!scene) return;
+
+  document
+    .getElementById("rightPanel")
+    .classList.add("open");
+
+  document
+    .getElementById("emptyInspector")
+    .style.display = "none";
+
+  document
+    .getElementById("inspector")
+    .style.display = "block";
+
+  document.getElementById("inspectorTitle").textContent =
+    scene.name || "장면";
+
+  document.getElementById("editName").value =
+    scene.name || "";
+
+  document.getElementById("editDescription").value =
+    scene.description || "";
+
+  document.getElementById("editEmotion").value =
+    scene.emotion || "";
+
+  document.getElementById("editRhythm").value =
+    scene.rhythm || "편집자 판단";
+
+  document.getElementById("editDuration").value =
+    scene.duration || "";
+
+  document.getElementById("editNote").value =
+    scene.note || "";
+
+  renderAssets();
+  renderTimeline();
+}
+
+
+/* ------------------------------------
+   INPUT UPDATE
+------------------------------------ */
+
+[
+  ["editName", "name"],
+  ["editDescription", "description"],
+  ["editEmotion", "emotion"],
+  ["editRhythm", "rhythm"],
+  ["editDuration", "duration"],
+  ["editNote", "note"]
+]
+.forEach(([elementId, key]) => {
+
+  document
+    .getElementById(elementId)
+    .addEventListener("input", e => {
+
+      const scene =
+        scenes.find(
+          scene =>
+          scene.id === selectedSceneId
+        );
+
+      if (!scene) return;
+
+      scene[key] = e.target.value;
+
+      document
+        .getElementById("inspectorTitle")
+        .textContent =
+        scene.name || "장면";
+
+      renderTimeline();
+      markChanged();
+    });
+});
+
+
+/* ------------------------------------
+   ADD SCENE
+------------------------------------ */
+
+function addScene() {
+
+  const scene = {
+    id: crypto.randomUUID(),
+    name: "새로운 장면",
+    description: "",
+    emotion: "",
+    rhythm: "편집자 판단",
+    duration: "",
+    assets: [],
+    note: ""
+  };
+
+  scenes.push(scene);
+
+  renderTimeline();
+  selectScene(scene.id);
+  markChanged();
+}
+
+
+/* ------------------------------------
+   DELETE
+------------------------------------ */
+
+function deleteCurrentScene() {
+
+  if (!selectedSceneId) return;
+
+  scenes =
+    scenes.filter(
+      scene =>
+      scene.id !== selectedSceneId
+    );
+
+  selectedSceneId = null;
+
+  document
+    .getElementById("emptyInspector")
+    .style.display = "block";
+
+  document
+    .getElementById("inspector")
+    .style.display = "none";
+
+  renderTimeline();
+  markChanged();
+}
+
+
+/* ------------------------------------
+   MOVE
+------------------------------------ */
+
+function moveScene(id, direction) {
+
+  const index =
+    scenes.findIndex(
+      scene =>
+      scene.id === id
+    );
+
+  const newIndex =
+    index + direction;
+
+  if (
+    index < 0 ||
+    newIndex < 0 ||
+    newIndex >= scenes.length
+  ) return;
+
+  const temp = scenes[index];
+
+  scenes[index] =
+    scenes[newIndex];
+
+  scenes[newIndex] =
+    temp;
+
+  renderTimeline();
+  markChanged();
+}
+
+
+/* ------------------------------------
+   DUPLICATE
+------------------------------------ */
+
+function duplicateScene(id) {
+
+  const index =
+    scenes.findIndex(
+      scene => scene.id === id
+    );
+
+  if (index < 0) return;
+
+  const original =
+    scenes[index];
+
+  const copy = {
+    ...structuredClone(original),
+    id: crypto.randomUUID(),
+    name: original.name + " 복사본"
+  };
+
+  scenes.splice(
+    index + 1,
+    0,
+    copy
+  );
+
+  renderTimeline();
+  markChanged();
+}
+
+
+/* ------------------------------------
+   ASSETS
+------------------------------------ */
+
+function renderAssets() {
+
+  const scene =
+    scenes.find(
+      scene =>
+      scene.id === selectedSceneId
+    );
+
+  const list =
+    document.getElementById("assetList");
+
+  list.innerHTML = "";
+
+  if (!scene) return;
+
+  scene.assets.forEach((asset, index) => {
+
+    const item =
+      document.createElement("div");
+
+    item.className = "asset-item";
+
+    item.innerHTML = `
+      <span>${escapeHTML(asset)}</span>
+      <button
+        class="asset-remove"
+        onclick="removeAsset(${index})"
+      >
+        ×
+      </button>
+    `;
+
+    list.appendChild(item);
+  });
+}
+
+
+function addAsset() {
+
+  const input =
+    document.getElementById("assetInput");
+
+  const value =
+    input.value.trim();
+
+  if (!value) return;
+
+  const scene =
+    scenes.find(
+      scene =>
+      scene.id === selectedSceneId
+    );
+
+  if (!scene) return;
+
+  scene.assets.push(value);
+
+  input.value = "";
+
+  renderAssets();
+  renderTimeline();
+  markChanged();
+}
+
+
+function removeAsset(index) {
+
+  const scene =
+    scenes.find(
+      scene =>
+      scene.id === selectedSceneId
+    );
+
+  if (!scene) return;
+
+  scene.assets.splice(
+    index,
+    1
+  );
+
+  renderAssets();
+  renderTimeline();
+  markChanged();
+}
+
+
+/* ------------------------------------
+   CHIPS
+------------------------------------ */
+
+document
+  .querySelectorAll(".chip")
+  .forEach(chip => {
+
+    chip.addEventListener("click", () => {
+
+      chip.classList.toggle("active");
+      markChanged();
+
+    });
+
+  });
+
+
+function selectedChips(containerId) {
+
+  return [
+    ...document
+      .querySelectorAll(
+        "#" + containerId + " .chip.active"
+      )
+  ]
+  .map(
+    chip =>
+    chip.textContent.trim()
+  );
+}
+
+
+/* ------------------------------------
+   BUILD PROJECT DATA
+------------------------------------ */
+
+function getProjectData() {
+
+  return {
+
+    version: 1,
+
+    project: {
+      title:
+        document
+          .getElementById("projectTitle")
+          .value,
+
+      length:
+        document
+          .getElementById("filmLength")
+          .value,
+
+      type:
+        document
+          .getElementById("filmType")
+          .value,
+
+      intent:
+        document
+          .getElementById("filmIntent")
+          .value,
+
+      moods:
+        selectedChips("moodChips"),
+
+      focus:
+        selectedChips("focusChips")
+    },
+
+    scenes: scenes,
+
+    updatedAt:
+      new Date().toISOString()
+  };
+}
+
+
+/* ------------------------------------
+   LOCAL SAVE
+------------------------------------ */
+
+function saveProject() {
+
+  const data =
+    getProjectData();
+
+  localStorage.setItem(
+    "layerWeddingFilm",
+    JSON.stringify(data)
+  );
+
+  const status =
+    document.getElementById("saveStatus");
+
+  status.textContent = "저장됨";
+
+  setTimeout(() => {
+    status.textContent = "로컬 저장";
+  }, 1500);
+}
+
+
+function loadProject() {
+
+  const saved =
+    localStorage.getItem(
+      "layerWeddingFilm"
+    );
+
+  if (!saved) {
+    renderTimeline();
+    return;
+  }
+
+  try {
+
+    const data =
+      JSON.parse(saved);
+
+    scenes =
+      data.scenes || scenes;
+
+    const p =
+      data.project || {};
+
+    document.getElementById("projectTitle").value =
+      p.title || "";
+
+    document.getElementById("filmIntent").value =
+      p.intent || "";
+
+    if (p.length) {
+      document.getElementById("filmLength").value =
+        p.length;
+    }
+
+    if (p.type) {
+      document.getElementById("filmType").value =
+        p.type;
+    }
+
+    activateSavedChips(
+      "moodChips",
+      p.moods || []
+    );
+
+    activateSavedChips(
+      "focusChips",
+      p.focus || []
+    );
+
+    document
+      .getElementById("saveStatus")
+      .textContent =
+      "이전 구조 불러옴";
+
+  }
+  catch (error) {
+    console.error(error);
+  }
+
+  renderTimeline();
+}
+
+
+function activateSavedChips(
+  containerId,
+  values
+) {
+
+  document
+    .querySelectorAll(
+      "#" + containerId + " .chip"
+    )
+    .forEach(chip => {
+
+      if (
+        values.includes(
+          chip.textContent.trim()
+        )
+      ) {
+        chip.classList.add("active");
+      }
+
+    });
+}
+
+
+/* ------------------------------------
+   EXPORT JSON
+------------------------------------ */
+
+function exportProject() {
+
+  const data =
+    getProjectData();
+
+  const blob =
+    new Blob(
+      [
+        JSON.stringify(
+          data,
+          null,
+          2
+        )
+      ],
+      {
+        type:
+          "application/json"
+      }
+    );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const link =
+    document.createElement("a");
+
+  link.href = url;
+
+  link.download =
+    "layer-wedding-film.json";
+
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+
+/* ------------------------------------
+   CHANGE STATE
+------------------------------------ */
+
+function markChanged() {
+
+  document
+    .getElementById("saveStatus")
+    .textContent =
+    "변경됨";
+}
+
+
+/* ------------------------------------
+   SECURITY
+------------------------------------ */
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+
+/* ------------------------------------
+   GENERAL INPUT EVENTS
+------------------------------------ */
+
+[
+  "projectTitle",
+  "filmLength",
+  "filmType",
+  "filmIntent"
+]
+.forEach(id => {
+
+  document
+    .getElementById(id)
+    .addEventListener(
+      "input",
+      markChanged
+    );
+
+});
+
+
+/* ENTER TO ADD ASSET */
+
+document
+  .getElementById("assetInput")
+  .addEventListener(
+    "keydown",
+    event => {
+
+      if (event.key === "Enter") {
+        event.preventDefault();
+        addAsset();
+      }
+
+    }
+  );
+
+
+/* START */
+
+loadProject();
+
+</script>
+
+</body>
+</html>
